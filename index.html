@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <title>武漢肺炎分佈圖 - Google Maps API - Augustus - Let's Write</title>
+    <link rel="canonical" href="https://letswritetw.github.io/letswrite-google-map-api-6/"/>
+    <meta property="og:url" content="https://letswritetw.github.io/letswrite-google-map-api-6/"/>
+    <meta property="fb:app_id" content="2435108729902508"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content="Let's Write"/>
+    <meta property="og:title" content="武漢肺炎分佈圖 - Augustus - Let's Write"/>
+    <meta itemprop="name" content="武漢肺炎分佈圖 - Augustus - Let's Write"/>
+    <meta name="description" content="武漢肺炎分佈圖"/>
+    <meta property="og:description" content="武漢肺炎分佈圖"/>
+    <meta itemprop="description" content="武漢肺炎分佈圖"/>
+    <meta itemprop="image" content="https://letswritetw.github.io/letswrite-google-map-api-6/fb.jpg"/>
+    <meta property="og:image" content="https://letswritetw.github.io/letswrite-google-map-api-6/fb.jpg"/>
+    <meta property="og:image:width" content="1200"/>
+    <meta property="og:image:height" content="630"/>
+    <meta property="og:image:alt" content="武漢肺炎分佈圖"/>
+    <link rel="shortcut icon" href="https://i0.wp.com/letswrite.tw/wp-content/uploads/2019/07/cropped-letswrite512-1.jpg"/>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <style>
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+      html, body, .full-screen, #map {
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
+      }
+      .container-fluid {
+        padding: 0;
+      }
+      .header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 2;
+        padding-right: 15px;
+        padding-left: 15px;
+        padding-bottom: 10px;
+        background-color: rgba(0,0,0,.8);
+        border-bottom-right-radius: 15px;
+        color: rgba(255,255,255,.87);
+      }
+      .gm-style .gm-style-iw-d p {
+        margin-bottom: 0;
+      }
+    </style>
+
+    <link rel="shortcut icon" href="https://i0.wp.com/letswrite.tw/wp-content/uploads/2019/07/cropped-letswrite512-1.jpg"/>
+
+    <!-- Google Tag Manager-->
+    <script>
+      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+      'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+      })(window,document,'script','dataLayer','GTM-PGQ9WQT');
+    </script>
+
+  </head>
+  <body>
+
+    <!-- Google Tag Manager (noscript)-->
+    <noscript>
+      <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PGQ9WQT" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    </noscript>
+
+    <div class="container-fluid">
+      <header class="header">
+        <div class="text-center">
+          <h1 class="h3">武漢肺炎分佈圖</h1>
+          <h6>
+            資料來源：
+            <a href="https://docs.google.com/spreadsheets/d/1UF2pSkFTURko2OvfHWWlFpDFAr1UxCBA4JLwlSP6KFo/htmlview?usp=sharing&sle=true" target="_blank">time_series_2019-ncov</a>
+          </h6>
+        </div>
+      </header>
+
+      <main class="full-screen">
+        <div id="map"></div>
+      </main>
+    </div>
+
+    <!-- map -->
+    <script>
+      let map;
+      function initMap() {
+
+        fetch('https://script.google.com/macros/s/AKfycbycicX5-NDjA6FEbwfauuUSi4NSN4RXbEGSkqPMc3G9JDNA40s/exec')
+          .then(res => res.json())
+          .then(res => {
+
+            // 預設顯示的中心點
+            let center = {
+              lat: 30.97564,
+              lng: 112.2707
+            };
+
+            console.log(res)
+
+            map = new google.maps.Map(document.getElementById('map'), {
+              center: center,
+              zoom: 5,
+              mapTypeId: 'roadmap',
+              zoomControl: false,
+              mapTypeControl: false,
+              streetViewControl: false,
+              fullscreenControl: false,
+              styles: [
+                { elementType: 'geometry', stylers: [{color: '#263238'}] },
+                { elementType: 'labels.text.stroke', stylers: [{color: '#242f3e'}] },
+                { elementType: 'labels.text.fill', stylers: [{color: '#FFD54F'}] },
+                {
+                  featureType: 'administrative',
+                  elementType: 'geometry.stroke',
+                  stylers: [{color: '#746855'}]
+                },
+                {
+                  featureType: 'administrative.land_parcel',
+                  elementType: 'geometry.stroke',
+                  stylers: [{color: '#746855'}]
+                },
+                {
+                  featureType: 'administrative.locality',
+                  elementType: 'geometry.stroke',
+                  stylers: [{color: '#746855'}]
+                },
+                {
+                  featureType: 'administrative.locality',
+                  elementType: 'labels.text.fill',
+                  stylers: [{color: '#BCAAA4'}]
+                },
+                {
+                  featureType: 'administrative.neighborhood',
+                  elementType: 'geometry',
+                  stylers: [{visibility: 'off'}]
+                },
+                {
+                  featureType: 'poi',
+                  elementType: 'geometry',
+                  stylers: [{visibility: 'off'}]
+                },
+                {
+                  featureType: 'road',
+                  elementType: 'geometry',
+                  stylers: [{visibility: 'off'}]
+                },
+                {
+                  featureType: 'transit',
+                  elementType: 'geometry',
+                  stylers: [{visibility: 'off'}]
+                },
+                {
+                  featureType: 'water',
+                  elementType: 'geometry',
+                  stylers: [{color: '#37474F'}]
+                },
+                {
+                  featureType: 'water',
+                  elementType: 'labels.text.fill',
+                  stylers: [{color: '#515c6d'}]
+                },
+                {
+                  featureType: 'water',
+                  elementType: 'labels.text.stroke',
+                  stylers: [{color: '#263238'}]
+                }
+              ]
+            });
+
+            // 放 heat map 的資料陣列
+            let heatmapData = [];
+
+            let keys = Object.keys(res);
+
+            // 處理每個資料
+            Array.prototype.forEach.call(keys, key => {
+
+              let obj = res[key];
+
+              // 經緯度
+              let latlng = new google.maps.LatLng(obj.lat, obj.lng);
+
+              // 放maker
+              let marker = new google.maps.Marker({
+                position: latlng,
+                map: map
+              });
+
+              // info window
+              let infowindow = new google.maps.InfoWindow({
+                content: `
+                  <h6>${key}</h6>
+                  <p>確診：${obj.confirmed}</p>
+                  <p>康復：${obj.recovered}</p>
+                  <p>死亡：${obj.death}</p>
+                `,
+              });
+
+              // 監聽 marker click 事件
+              marker.addListener('click', e => {
+                infowindow.open(map, marker);
+              });
+
+              // 熱圖的 data
+              let coData = {
+                location: latlng,
+                weight: obj.confirmed
+              };
+
+              // 湖北數目太大，減一萬才能畫熱圖
+              if(key === 'Hubei') {
+                coData.weight = obj.confirmed - 10000
+              }
+
+              heatmapData.push(coData);
+
+            });
+
+            // 生成 heat map
+            let heatmap = new google.maps.visualization.HeatmapLayer({
+              data: heatmapData,
+              dissipating: true,
+              radius: 40
+            });
+
+            // 把 heat map 放上地圖
+            heatmap.setMap(map);
+
+          });
+      }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHFcCQv-RFAsOUE2uxQ4iuthHqyVyrJHo&libraries=visualization&callback=initMap" async defer></script>
+
+  </body>
+</html>
