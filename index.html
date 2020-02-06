@@ -110,7 +110,7 @@
       <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PGQ9WQT" height="0" width="0" style="display:none;visibility:hidden"></iframe>
     </noscript>
 
-    <div class="container-fluid">
+    <div id="app" class="container-fluid">
       <header class="header">
         <h1 class="text-center h3">武漢肺炎分佈圖</h1>
         <h6>
@@ -127,164 +127,13 @@
         </h6>
       </header>
 
-      <main class="full-screen loading">
+      <main class="full-screen" :class="{ 'loading': loadingMask }">
         <div id="map"></div>
       </main>
     </div>
-
-    <!-- map -->
-    <script>
-      let map;
-      function initMap() {
-
-        fetch('https://script.google.com/macros/s/AKfycbycicX5-NDjA6FEbwfauuUSi4NSN4RXbEGSkqPMc3G9JDNA40s/exec')
-          .then(res => res.json())
-          .then(res => {
-
-            // 預設顯示的中心點
-            let center = {
-              lat: 30.97564,
-              lng: 112.2707
-            };
-
-            console.log(res)
-
-            map = new google.maps.Map(document.getElementById('map'), {
-              center: center,
-              zoom: 5,
-              mapTypeId: 'roadmap',
-              zoomControl: false,
-              mapTypeControl: false,
-              streetViewControl: false,
-              fullscreenControl: true,
-              styles: [
-                { elementType: 'geometry', stylers: [{color: '#263238'}] },
-                { elementType: 'labels.text.stroke', stylers: [{color: '#242f3e'}] },
-                { elementType: 'labels.text.fill', stylers: [{color: '#FFD54F'}] },
-                {
-                  featureType: 'administrative',
-                  elementType: 'geometry.stroke',
-                  stylers: [{color: '#746855'}]
-                },
-                {
-                  featureType: 'administrative.land_parcel',
-                  elementType: 'geometry.stroke',
-                  stylers: [{color: '#746855'}]
-                },
-                {
-                  featureType: 'administrative.locality',
-                  elementType: 'geometry.stroke',
-                  stylers: [{color: '#746855'}]
-                },
-                {
-                  featureType: 'administrative.locality',
-                  elementType: 'labels.text.fill',
-                  stylers: [{color: '#BCAAA4'}]
-                },
-                {
-                  featureType: 'administrative.neighborhood',
-                  elementType: 'geometry',
-                  stylers: [{visibility: 'off'}]
-                },
-                {
-                  featureType: 'poi',
-                  elementType: 'geometry',
-                  stylers: [{visibility: 'off'}]
-                },
-                {
-                  featureType: 'road',
-                  elementType: 'geometry',
-                  stylers: [{visibility: 'off'}]
-                },
-                {
-                  featureType: 'transit',
-                  elementType: 'geometry',
-                  stylers: [{visibility: 'off'}]
-                },
-                {
-                  featureType: 'water',
-                  elementType: 'geometry',
-                  stylers: [{color: '#37474F'}]
-                },
-                {
-                  featureType: 'water',
-                  elementType: 'labels.text.fill',
-                  stylers: [{color: '#515c6d'}]
-                },
-                {
-                  featureType: 'water',
-                  elementType: 'labels.text.stroke',
-                  stylers: [{color: '#263238'}]
-                }
-              ]
-            });
-
-            // 放 heat map 的資料陣列
-            let heatmapData = [];
-
-            let keys = Object.keys(res);
-
-            // 處理每個資料
-            Array.prototype.forEach.call(keys, key => {
-
-              let obj = res[key];
-
-              // 經緯度
-              let latlng = new google.maps.LatLng(obj.lat, obj.lng);
-
-              // 放maker
-              let marker = new google.maps.Marker({
-                position: latlng,
-                map: map
-              });
-
-              // info window
-              let infowindow = new google.maps.InfoWindow({
-                content: `
-                  <h6>${key}</h6>
-                  <p>確診：${obj.confirmed}</p>
-                  <p>康復：${obj.recovered}</p>
-                  <p>死亡：${obj.death}</p>
-                `,
-              });
-
-              // 監聽 marker click 事件
-              marker.addListener('click', e => {
-                infowindow.open(map, marker);
-              });
-
-              // 熱圖的 data
-              let coData = {
-                location: latlng,
-                weight: obj.confirmed
-              };
-
-              // 湖北數目太大，減一萬才能畫熱圖
-              if(key === 'Hubei') {
-                coData.weight = obj.confirmed - 10000
-              }
-
-              heatmapData.push(coData);
-
-            });
-
-            // 生成 heat map
-            let heatmap = new google.maps.visualization.HeatmapLayer({
-              data: heatmapData,
-              dissipating: true,
-              radius: 40
-            });
-
-            // 把 heat map 放上地圖
-            heatmap.setMap(map);
-
-            // 移除loading
-            document.querySelector('.full-screen').classList.remove('loading')
-
-          });
-      }
-    </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBG9pWjn7gWHoqsNqTrU2EpWfZkyTlh6_I&libraries=visualization&callback=initMap" async defer></script>
+    
+    <script src="https://vuejs.org/js/vue.min.js"></script>
+    <script src="main.min.js"></script>
 
   </body>
 </html>
