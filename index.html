@@ -22,74 +22,8 @@
     <meta property="og:image:alt" content="武漢肺炎分佈圖"/>
     <link rel="shortcut icon" href="https://i0.wp.com/letswrite.tw/wp-content/uploads/2019/07/cropped-letswrite512-1.jpg"/>
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <style>
-      *, *::before, *::after {
-        box-sizing: border-box;
-      }
-      html, body, .full-screen, #map {
-        width: 100%;
-        height: 100vh;
-        overflow: hidden;
-      }
-      body {
-        background-color: #263238;
-      }
-      .container-fluid {
-        padding: 0;
-      }
-      .header {
-        position: fixed;
-        top: 0;
-        left: 0;
-        z-index: 2;
-        padding-right: 15px;
-        padding-left: 15px;
-        padding-bottom: 10px;
-        background-color: rgba(0,0,0,.8);
-        border-bottom-right-radius: 15px;
-        color: rgba(255,255,255,.87);
-      }
-      .gm-style .gm-style-iw-d p {
-        margin-bottom: 0;
-      }
-      .loading {
-        position: relative;
-      }
-      @keyframes loading {
-        to {
-          opacity: 0;
-        }
-      }
-      @keyframes word {
-        to {
-          color: #263238;
-        }
-      }
-      .loading::before, .loading::after {
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-      }
-      .loading::before {
-        content: '';
-        z-index: 1;
-        background-image: radial-gradient(circle 248px at center, #455A64 0%, #37474F 47%, #263238 100%);
-        animation: loading 1s ease-in-out infinite alternate;
-      }
-      .loading::after {
-        content: '繪製地圖中';
-        z-index: 2;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 18px;
-        color: #FFF;
-        animation: word 1s ease-in-out infinite alternate;
-      }
-    </style>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="dist/style.min.css">
 
     <link rel="shortcut icon" href="https://i0.wp.com/letswrite.tw/wp-content/uploads/2019/07/cropped-letswrite512-1.jpg"/>
 
@@ -111,8 +45,8 @@
     </noscript>
 
     <div id="app" class="container-fluid">
-      <header class="header">
-        <h1 class="text-center h3">武漢肺炎分佈圖</h1>
+      <header class="header p-3">
+        <h1 class="text-center h4">武漢肺炎分佈圖</h1>
         <h6>
           資料來源：
           <a href="https://docs.google.com/spreadsheets/d/1UF2pSkFTURko2OvfHWWlFpDFAr1UxCBA4JLwlSP6KFo/htmlview?usp=sharing&sle=true" target="_blank">time_series_2019-ncov</a>
@@ -130,10 +64,54 @@
       <main class="full-screen" :class="{ 'loading': loadingMask }">
         <div id="map"></div>
       </main>
+
+      <!-- 表列數據 -->
+      <div class="data-list card text-white bg-dark">
+        <div class="card-header">
+          <ul class="nav nav-tabs card-header-tabs">
+            <li class="nav-item">
+              <a
+                class="nav-link text-white bg-dark"
+                :class="{ 'active': tabType == 'confirmed' }"
+                href="#"
+                @click.prevent="tabType = 'confirmed'"
+              >確診</a>
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link text-white bg-dark"
+                :class="{ 'active': tabType == 'recovered' }"
+                href="#"
+                @click.prevent="tabType = 'recovered'"
+              >康復</a>
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link text-white bg-dark"
+                :class="{ 'active': tabType == 'death' }"
+                href="#"
+                @click.prevent="tabType = 'death'"
+              >死亡</a>
+            </li>
+          </ul>
+        </div>
+        <div class="card-body">
+          <ul class="list-group list-group-flush">
+            <li
+              v-for="(data, key) in responseData"
+              class="list-group-item d-flex justify-content-between align-items-center text-white bg-dark">
+              {{ data.state }}
+              <span class="badge badge-secondary badge-pill">
+                {{ showCount(data.confirmed, data.recovered, data.death) }}
+              </span>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
     
     <script src="https://vuejs.org/js/vue.min.js"></script>
-    <script src="main.min.js"></script>
+    <script src="dist/main.min.js"></script>
 
   </body>
 </html>

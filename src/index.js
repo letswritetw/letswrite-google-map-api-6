@@ -5,10 +5,12 @@ const GoogleMap = new Vue({
     loadingMask: true, // loading effect
     api: 'https://script.google.com/macros/s/AKfycbycicX5-NDjA6FEbwfauuUSi4NSN4RXbEGSkqPMc3G9JDNA40s/exec', // google apps script src
     map: null,
-    responeData: [], // 回來的資料
-    heatmapData: [] // heat map data
+    responseData: [], // 回來的資料
+    heatmapData: [], // heat map data
+    tabType: 'confirmed' // 數據列表的 active
   },
   methods: {
+    // Google Maps API
     initMap() {
       fetch(this.api)
         .then(res => res.json())
@@ -19,8 +21,6 @@ const GoogleMap = new Vue({
             lat: 30.97564,
             lng: 112.2707
           };
-
-          this.responeData = res;
 
           this.map = new google.maps.Map(document.getElementById('map'), {
             center: center,
@@ -95,9 +95,17 @@ const GoogleMap = new Vue({
           let keys = Object.keys(res);
 
           // 處理每個資料
+          let tempArr = []; // 最後要排序用的
           Array.prototype.forEach.call(keys, key => {
 
             let obj = res[key];
+
+            let tempItem = {};
+            tempItem.state = key;
+            tempItem.confirmed = res[key].confirmed;
+            tempItem.recovered = res[key].recovered;
+            tempItem.death = res[key].death;
+            tempArr.push(tempItem);
 
             // 經緯度
             let latlng = new google.maps.LatLng(obj.lat, obj.lng);
@@ -138,6 +146,11 @@ const GoogleMap = new Vue({
 
           });
 
+          // responseData 存排序過的 
+          this.responseData = tempArr.sort((a, b) => {
+            return a.confirmed > b.confirmed ? -1 : 1;
+          });
+
           // 生成 heat map
           let heatmap = new google.maps.visualization.HeatmapLayer({
             data: this.heatmapData,
@@ -152,6 +165,18 @@ const GoogleMap = new Vue({
           this.loadingMask = false;
 
       });
+    },
+    // 數據列表要呈現哪一組資料
+    showCount(confirmed, recovered, death) {
+      if(this.tabType === 'confirmed') {
+        return confirmed;
+      }
+      if(this.tabType === 'recovered') {
+        return recovered;
+      }
+      if(this.tabType === 'death') {
+        return death;
+      }
     }
   },
   created() {

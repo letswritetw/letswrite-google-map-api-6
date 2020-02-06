@@ -17,6 +17,27 @@
 		"oAP": "/.gitignore",
 		"oF": 0
 		},
+	"/dist/main.min.js": {
+		"bF": 0,
+		"ft": 64,
+		"ma": 1,
+		"mi": 1,
+		"oA": 1,
+		"oAP": "/dist/main.min.min.js",
+		"oF": 0,
+		"sC": 0,
+		"tS": 1
+		},
+	"/dist/style.min.css": {
+		"aP": 1,
+		"bl": 0,
+		"ft": 16,
+		"ma": 0,
+		"oA": 0,
+		"oAP": "/dist/style.min-min.css",
+		"oF": 0,
+		"oS": 3
+		},
 	"/fb.jpg": {
 		"ft": 16384,
 		"iS": 143489,
@@ -36,27 +57,42 @@
 		"oAP": "/index.html",
 		"oF": 0
 		},
-	"/main.js": {
+	"/src/index.js": {
 		"bF": 0,
 		"ft": 64,
 		"ma": 0,
 		"mi": 1,
 		"oA": 0,
-		"oAP": "/main.min.js",
-		"oF": 1,
+		"oAP": "/dist/main.min.js",
+		"oF": 3,
 		"sC": 0,
 		"tS": 1
 		},
-	"/main.min.js": {
-		"bF": 0,
-		"ft": 64,
+	"/src/style.sass": {
+		"aP": 1,
+		"bl": 0,
+		"dP": 10,
+		"dS": 0,
+		"ft": 2,
+		"ma": 0,
+		"oA": 0,
+		"oAP": "/dist/style.min.css",
+		"oF": 2,
+		"oS": 3,
+		"uL": 1
+		},
+	"/style.sass": {
+		"aP": 1,
+		"bl": 0,
+		"dP": 10,
+		"dS": 0,
+		"ft": 2,
 		"ma": 1,
-		"mi": 1,
-		"oA": 1,
-		"oAP": "/main.min.min.js",
+		"oA": 0,
+		"oAP": "/css/style.min.css",
 		"oF": 0,
-		"sC": 0,
-		"tS": 1
+		"oS": 3,
+		"uL": 1
 		}
 	},
 "hooks": [
