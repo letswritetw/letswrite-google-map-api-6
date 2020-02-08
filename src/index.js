@@ -186,7 +186,7 @@ const GoogleMap = new Vue({
             center: center,
             zoom: 5,
             mapTypeId: 'roadmap',
-            zoomControl: false,
+            zoomControl: true,
             mapTypeControl: false,
             streetViewControl: false,
             fullscreenControl: true,
