@@ -144,6 +144,26 @@ const GoogleMap = new Vue({
         "Belgium": "比利時"
       }, {
         "Madison, WI": "麥迪遜"
+      }, {
+        "Cruise Ship": "遊輪"
+      }, {
+        "Chicago, IL": "芝加哥"
+      }, {
+        "Toronto, ON": "多倫多"
+      }, {
+        "Santa Clara, CA": "聖塔克拉拉"
+      }, {
+        "San Benito, CA": "聖貝尼托縣"
+      }, {
+        "Seattle, WA": "西雅圖"
+      }, {
+        "Tempe, AZ": "坦佩"
+      }, {
+        "Orange, CA": "橙市"
+      }, {
+        "Los Angeles, CA": "洛杉磯"
+      }, {
+        "London, ON": "倫敦"
       }
     ]   
   },
@@ -243,7 +263,11 @@ const GoogleMap = new Vue({
                 return result = trans[compareName];
               }
             });
-            return result;
+            if(result != '') {
+              return result;
+            } else {
+              return name
+            }
           }
 
           // 處理每個資料
@@ -253,6 +277,7 @@ const GoogleMap = new Vue({
             let dataFormat = {};
             dataFormat.id = res[key].id;
             dataFormat.state = translateCh(key);
+            // dataFormat.state = key;
             dataFormat.lat = res[key].lat;
             dataFormat.lng = res[key].lng;
             dataFormat.confirmed = res[key].confirmed;
@@ -282,15 +307,15 @@ const GoogleMap = new Vue({
             // 監聽 marker click 事件
             marker.addListener('click', e => {
               infowindow.open(this.map, marker);
-              console.log(_this.api + '?target=' + dataFormat.id)
-              fetch(_this.api + '?target=' + dataFormat.id, {
-                method: 'POST',
-                redirect: 'follow'
-              }).then(res => res.json())
-                .then(data => {
-                  console.log(data)
-                  this.openChartModal(data)
-                })
+              // console.log(_this.api + '?target=' + dataFormat.id)
+              // fetch(_this.api + '?target=' + dataFormat.id, {
+              //   method: 'POST',
+              //   redirect: 'follow'
+              // }).then(res => res.json())
+              //   .then(data => {
+              //     console.log(data)
+              //     this.openChartModal(data)
+              //   })
             });
 
             // 熱圖的 data
