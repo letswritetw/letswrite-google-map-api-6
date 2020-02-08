@@ -277,7 +277,6 @@ const GoogleMap = new Vue({
             let dataFormat = {};
             dataFormat.id = res[key].id;
             dataFormat.state = translateCh(key);
-            // dataFormat.state = key;
             dataFormat.lat = res[key].lat;
             dataFormat.lng = res[key].lng;
             dataFormat.confirmed = res[key].confirmed;
@@ -303,6 +302,11 @@ const GoogleMap = new Vue({
                 <p>死亡：${dataFormat.death}</p>
               `,
             });
+
+            dataFormat.openInfoWindow = () => {
+              infowindow.open(this.map, marker);
+            }
+            
 
             // 監聽 marker click 事件
             marker.addListener('click', e => {
@@ -369,6 +373,12 @@ const GoogleMap = new Vue({
     openChartModal(data) {
       // 整理資料：前五筆是資訊、後面的是數據
       MicroModal.show('chart-model');
+    },
+    // 移動地圖中心
+    moveMapCenter(lat, lng, el) {
+      let latLng = new google.maps.LatLng(lat, lng);
+      this.map.panTo(latLng);
+      el.openInfoWindow();
     }
   },
   created() {

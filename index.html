@@ -100,7 +100,9 @@
             <li
               v-for="(data, key) in responseData"
               class="list-group-item d-flex justify-content-between align-items-center text-white bg-dark">
-              {{ data.state }}
+              <a href="#" @click.prevent="moveMapCenter(data.lat, data.lng, data)">
+                {{ data.state }}
+              </a>
               <span class="badge badge-secondary badge-pill">
                 {{ showCount(data.confirmed, data.recovered, data.death) }}
               </span>
