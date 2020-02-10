@@ -23,7 +23,7 @@
     <link rel="shortcut icon" href="https://i0.wp.com/letswrite.tw/wp-content/uploads/2019/07/cropped-letswrite512-1.jpg"/>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="dist/style.min.css?v=1.0.3">
+    <link rel="stylesheet" href="dist/style.min.css?v=1.2.0">
 
     <link rel="shortcut icon" href="https://i0.wp.com/letswrite.tw/wp-content/uploads/2019/07/cropped-letswrite512-1.jpg"/>
 
@@ -46,7 +46,7 @@
 
     <div id="app" class="container-fluid">
       <header class="header p-3">
-        <h1 class="text-center h4">武漢肺炎分佈圖</h1>
+        <h1 class="text-center h4">武漢肺炎全球分佈圖</h1>
         <h6>
           資料來源：
           <a href="https://docs.google.com/spreadsheets/d/1UF2pSkFTURko2OvfHWWlFpDFAr1UxCBA4JLwlSP6KFo/htmlview?usp=sharing&sle=true" target="_blank">time_series_2019-ncov</a>
@@ -66,7 +66,7 @@
       </main>
 
       <!-- 表列數據 -->
-      <aside class="data-list card text-white bg-dark">
+      <aside class="data-list card text-white bg-dark for-mobile-up">
         <div class="card-header">
           <ul class="nav nav-tabs card-header-tabs">
             <li class="nav-item">
@@ -95,7 +95,7 @@
             </li>
           </ul>
         </div>
-        <div class="card-body">
+        <div class="card-body pr-2 pl-0">
           <ul class="list-group list-group-flush">
             <li
               v-for="(data, key) in responseData"
@@ -112,23 +112,20 @@
       </aside>
 
       <!-- chart modal -->
-      <section id="chart-modal" aria-hidden="true">
-
-        <div tabindex="-1" data-micromodal-close>
-
-          <div role="dialog" aria-modal="true" aria-labelledby="modal-1-title" >
-
-            <header>
-              <h2 id="modal-1-title">
-                Modal Title
-              </h2>
-              <button aria-label="Close modal" data-micromodal-close></button>
-            </header>
-
-            <div id="modal-1-content">
-              Modal Content
-            </div>
-
+      <section class="chart-modal for-mobile-up">
+        <div class="toast text-center" :class="{ 'fade show': toast }">
+          <div class="spinner-border text-secondary m-5" v-if="toastLoading">
+            <span class="sr-only">Loading...</span>
+          </div>
+          <div class="toast-header" v-if="!toastLoading">
+            <strong class="mr-auto">{{ chart.state }}</strong>
+            <small>確診：{{ chart.confirmed }}。康復：{{ chart.recovered }}。死亡：{{ chart.death }}</small>
+            <button type="button" class="ml-2 mb-1 close" @click="toast = false">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="toast-body" v-if="!toastLoading">
+            <div id="chart_div" style="width: 100%;"></div>
           </div>
         </div>
       </section>
@@ -136,7 +133,8 @@
     </div>
     
     <script src="https://vuejs.org/js/vue.min.js"></script>
-    <script src="dist/main.min.js?v=1.0.2"></script>
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="dist/main.min.js?v=1.2.0"></script>
 
   </body>
 </html>

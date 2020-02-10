@@ -1,5 +1,3 @@
-import MicroModal from 'micromodal';
-
 const GoogleMap = new Vue({
   el: '#app',
   data: {
@@ -9,6 +7,15 @@ const GoogleMap = new Vue({
     responseData: [], // 回來的資料
     heatmapData: [], // heat map data
     tabType: 'confirmed', // 數據列表的 active
+    // 圖表資訊
+    chart: {
+      state: '',
+      confirmed: 0,
+      recovered: 0,
+      death: 0
+    },
+    toast: false, // 圖表是否打開
+    toastLoading: true,// 圖表是否在讀取中
     translate: [
       {
         "Anhui": "安徽省"
@@ -300,26 +307,40 @@ const GoogleMap = new Vue({
                 <p>確診：${dataFormat.confirmed}</p>
                 <p>康復：${dataFormat.recovered}</p>
                 <p>死亡：${dataFormat.death}</p>
+                <button
+                  type="button"
+                  id="info-btn-${dataFormat.id}"
+                  class="btn btn-secondary btn-sm m-1 mt-2 for-mobile-up">
+                  <small>開啟圖表</small> 
+                </button>
               `,
             });
 
+            // 由外部打開 infowindow 的 method
             dataFormat.openInfoWindow = () => {
               infowindow.open(this.map, marker);
             }
+
+            // 按下開啟圖表
+            infowindow.addListener('domready', e => {
+              let btn = document.getElementById(`info-btn-${dataFormat.id}`);
+              btn.addEventListener('click', e => {
+                this.toast = true;
+                this.toastLoading = true;
+                fetch(_this.api + '?target=' + dataFormat.id, {
+                  method: 'POST',
+                  redirect: 'follow'
+                }).then(res => res.json())
+                  .then(data => {
+                    this.openChartModal(dataFormat.state, dataFormat.confirmed, dataFormat.recovered, dataFormat.death, data)
+                  })
+              })
+            })
             
 
             // 監聽 marker click 事件
             marker.addListener('click', e => {
               infowindow.open(this.map, marker);
-              // console.log(_this.api + '?target=' + dataFormat.id)
-              // fetch(_this.api + '?target=' + dataFormat.id, {
-              //   method: 'POST',
-              //   redirect: 'follow'
-              // }).then(res => res.json())
-              //   .then(data => {
-              //     console.log(data)
-              //     this.openChartModal(data)
-              //   })
             });
 
             // 熱圖的 data
@@ -370,9 +391,54 @@ const GoogleMap = new Vue({
       }
     },
     // 開啟 chart modal
-    openChartModal(data) {
-      // 整理資料：前五筆是資訊、後面的是數據
-      MicroModal.show('chart-model');
+    openChartModal(state, confirmed, recovered, death, data) {
+
+      // 整理資料：前四筆是資訊、後面的是數據
+      this.chart.state = state;
+      this.chart.confirmed = confirmed;
+      this.chart.recovered = recovered;
+      this.chart.death = death;
+
+      google.charts.load('current', {'packages':['line']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      let chartData = [];
+      for(let i = 4, len = data[0].length; i < len; i++) {
+        let item = [
+          data[0][i].split('T')[0],
+          data[1][i],
+          data[2][i],
+          data[3][i]
+        ];
+        chartData.push(item);
+      }
+
+      function drawChart() {
+
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', '');
+        data.addColumn('number', '確診');
+        data.addColumn('number', '康復');
+        data.addColumn('number', '死亡');
+
+        data.addRows(chartData);
+
+        var options = {
+          axes: {
+            x: {
+              0: {side: 'bottom'}
+            }
+          },
+          chartArea: { left: 20, top: 20, width: '100%', height: '90%' },
+          colors: ['#2196F3', '#4CAF50', '#f44336']
+        };
+
+        var chart = new google.charts.Line(document.getElementById('chart_div'));
+
+        chart.draw(data, google.charts.Line.convertOptions(options));
+      }
+
+      this.toastLoading = false;
     },
     // 移動地圖中心
     moveMapCenter(lat, lng, el) {
@@ -386,6 +452,5 @@ const GoogleMap = new Vue({
     script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyBG9pWjn7gWHoqsNqTrU2EpWfZkyTlh6_I&libraries=visualization';
     document.head.appendChild(script);
     script.onload = this.initMap;
-    MicroModal.init(); // chart modal
-  },
+  }
 });
