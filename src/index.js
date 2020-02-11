@@ -310,6 +310,12 @@ const GoogleMap = new Vue({
                 <p>確診：${dataFormat.confirmed}</p>
                 <p>康復：${dataFormat.recovered}</p>
                 <p>死亡：${dataFormat.death}</p>
+                <button
+                  type="button"
+                  id="info-btn-${dataFormat.id}"
+                  class="btn btn-secondary btn-sm m-1 mt-2 for-mobile-up">
+                  <small>開啟圖表</small> 
+                </button>
               `,
             });
 
@@ -346,9 +352,9 @@ const GoogleMap = new Vue({
               weight: dataFormat.confirmed
             };
 
-            // 湖北數目太大，減一萬才能畫熱圖
+            // 湖北數目太大，縮小成跟大家差不多的數量才能畫熱圖
             if(confirmed[i]['Province/State'] === 'Hubei') {
-              coData.weight = dataFormat.confirmed - 10000
+              coData.weight = dataFormat.confirmed * 0.15
             }
 
             this.heatmapData.push(coData);
