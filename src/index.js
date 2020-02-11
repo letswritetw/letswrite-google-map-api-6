@@ -152,8 +152,6 @@ const GoogleMap = new Vue({
       }, {
         "Madison, WI": "麥迪遜"
       }, {
-        "Cruise Ship": "遊輪"
-      }, {
         "Chicago, IL": "芝加哥"
       }, {
         "Toronto, ON": "多倫多"
@@ -171,6 +169,8 @@ const GoogleMap = new Vue({
         "Los Angeles, CA": "洛杉磯"
       }, {
         "London, ON": "倫敦"
+      }, {
+        "Diamond Princess cruise ship": "鑽石公主號"
       }
     ]   
   },
@@ -276,13 +276,14 @@ const GoogleMap = new Vue({
           }
 
           // 處理每個資料
+          console.log(res)
           let tempArr = []; // 最後要排序用的
           const confirmed = res.confirmed;
           const recovered = res.recovered;
           const death = res.death;
           for(let i = 0, len = confirmed.length; i < len; i++) {
             let len = Object.keys(confirmed[0]).length - 1;
-            let state = confirmed[i]['Province/State'] || confirmed[i]['Country/Region'];
+            let state = confirmed[i]['Province/State'].replace('--', ', ') || confirmed[i]['Country/Region'].replace('--', ', ');
             let dataFormat = {};
             dataFormat.id = i;
             dataFormat.state = translateCh(state);
