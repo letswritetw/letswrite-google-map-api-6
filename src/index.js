@@ -2,7 +2,7 @@ const GoogleMap = new Vue({
   el: '#app',
   data: {
     loadingMask: true, // loading effect
-    api: 'https://script.google.com/macros/s/AKfycbycicX5-NDjA6FEbwfauuUSi4NSN4RXbEGSkqPMc3G9JDNA40s/exec', // google apps script src
+    api: 'https://script.google.com/macros/s/AKfycbxC425IS9ntTUJ2k1rLzyDhKmj4R5wnyTS4JFaUnysctbQ1mXAO/exec', // google apps script src
     map: null,
     responseData: [], // 回來的資料
     heatmapData: [], // heat map data
@@ -259,8 +259,6 @@ const GoogleMap = new Vue({
             ]
           });
 
-          let keys = Object.keys(res);
-
           // 城市、國家名翻中文
           function translateCh(name) {
             let result = '';
@@ -279,16 +277,20 @@ const GoogleMap = new Vue({
 
           // 處理每個資料
           let tempArr = []; // 最後要排序用的
-          Array.prototype.forEach.call(keys, key => {
-
+          const confirmed = res.confirmed;
+          const recovered = res.recovered;
+          const death = res.death;
+          for(let i = 0, len = confirmed.length; i < len; i++) {
+            let len = Object.keys(confirmed[0]).length - 1;
+            let state = confirmed[i]['Province/State'] || confirmed[i]['Country/Region'];
             let dataFormat = {};
-            dataFormat.id = res[key].id;
-            dataFormat.state = translateCh(key);
-            dataFormat.lat = res[key].lat;
-            dataFormat.lng = res[key].lng;
-            dataFormat.confirmed = res[key].confirmed;
-            dataFormat.recovered = res[key].recovered;
-            dataFormat.death = res[key].death;
+            dataFormat.id = i;
+            dataFormat.state = translateCh(state);
+            dataFormat.lat = confirmed[i]['Lat'];
+            dataFormat.lng = confirmed[i]['Long'];
+            dataFormat.confirmed = Number(confirmed[i][Object.keys(confirmed[0])[len]]) || 0;
+            dataFormat.recovered = Number(recovered[i][Object.keys(recovered[0])[len]]) || 0;
+            dataFormat.death = Number(death[i][Object.keys(death[0])[len]]) || 0;
             tempArr.push(dataFormat);
 
             // 經緯度
@@ -307,12 +309,6 @@ const GoogleMap = new Vue({
                 <p>確診：${dataFormat.confirmed}</p>
                 <p>康復：${dataFormat.recovered}</p>
                 <p>死亡：${dataFormat.death}</p>
-                <button
-                  type="button"
-                  id="info-btn-${dataFormat.id}"
-                  class="btn btn-secondary btn-sm m-1 mt-2 for-mobile-up">
-                  <small>開啟圖表</small> 
-                </button>
               `,
             });
 
@@ -322,20 +318,20 @@ const GoogleMap = new Vue({
             }
 
             // 按下開啟圖表
-            infowindow.addListener('domready', e => {
-              let btn = document.getElementById(`info-btn-${dataFormat.id}`);
-              btn.addEventListener('click', e => {
-                this.toast = true;
-                this.toastLoading = true;
-                fetch(_this.api + '?target=' + dataFormat.id, {
-                  method: 'POST',
-                  redirect: 'follow'
-                }).then(res => res.json())
-                  .then(data => {
-                    this.openChartModal(dataFormat.state, dataFormat.confirmed, dataFormat.recovered, dataFormat.death, data)
-                  })
-              })
-            })
+            // infowindow.addListener('domready', e => {
+            //   let btn = document.getElementById(`info-btn-${dataFormat.id}`);
+            //   btn.addEventListener('click', e => {
+            //     this.toast = true;
+            //     this.toastLoading = true;
+            //     fetch(_this.api + '?target=' + dataFormat.id, {
+            //       method: 'POST',
+            //       redirect: 'follow'
+            //     }).then(res => res.json())
+            //       .then(data => {
+            //         this.openChartModal(dataFormat.state, dataFormat.confirmed, dataFormat.recovered, dataFormat.death, data)
+            //       })
+            //   })
+            // });
             
 
             // 監聽 marker click 事件
@@ -350,13 +346,13 @@ const GoogleMap = new Vue({
             };
 
             // 湖北數目太大，減一萬才能畫熱圖
-            if(key === 'Hubei') {
+            if(confirmed[i]['Province/State'] === 'Hubei') {
               coData.weight = dataFormat.confirmed - 10000
             }
 
             this.heatmapData.push(coData);
 
-          });
+          }
 
           // responseData 存排序過的 
           this.responseData = tempArr.sort((a, b) => {
