@@ -14,6 +14,7 @@ const GoogleMap = new Vue({
       recovered: 0,
       death: 0
     },
+    chartCanvas: null, // 最後生成的圖表
     toast: false, // 圖表是否打開
     toastLoading: true,// 圖表是否在讀取中
     translate: [
@@ -276,7 +277,6 @@ const GoogleMap = new Vue({
           }
 
           // 處理每個資料
-          console.log(res)
           let tempArr = []; // 最後要排序用的
           const confirmed = res.confirmed;
           const recovered = res.recovered;
@@ -310,6 +310,12 @@ const GoogleMap = new Vue({
                 <p>確診：${dataFormat.confirmed}</p>
                 <p>康復：${dataFormat.recovered}</p>
                 <p>死亡：${dataFormat.death}</p>
+                <button
+                  type="button"
+                  id="info-btn-${dataFormat.id}"
+                  class="btn btn-secondary btn-sm m-1 mt-2 for-mobile-up">
+                  <small>開啟圖表</small> 
+                </button>
               `,
             });
 
@@ -319,20 +325,26 @@ const GoogleMap = new Vue({
             }
 
             // 按下開啟圖表
-            // infowindow.addListener('domready', e => {
-            //   let btn = document.getElementById(`info-btn-${dataFormat.id}`);
-            //   btn.addEventListener('click', e => {
-            //     this.toast = true;
-            //     this.toastLoading = true;
-            //     fetch(_this.api + '?target=' + dataFormat.id, {
-            //       method: 'POST',
-            //       redirect: 'follow'
-            //     }).then(res => res.json())
-            //       .then(data => {
-            //         this.openChartModal(dataFormat.state, dataFormat.confirmed, dataFormat.recovered, dataFormat.death, data)
-            //       })
-            //   })
-            // });
+            infowindow.addListener('domready', e => {
+              let btn = document.getElementById(`info-btn-${dataFormat.id}`);
+              btn.addEventListener('click', e => {
+                this.toast = true;
+                this.toastLoading = true;
+                this.openChartModal({
+                  state: dataFormat.state,
+                  count: {
+                    confirmed: dataFormat.confirmed,
+                    recovered: dataFormat.recovered,
+                    death: dataFormat.death,
+                  },
+                  data: {
+                    confirmed: res.confirmed[i],
+                    recovered: res.recovered[i],
+                    death: res.death[i]
+                  }
+                })
+              })
+            });
             
 
             // 監聽 marker click 事件
@@ -388,54 +400,110 @@ const GoogleMap = new Vue({
       }
     },
     // 開啟 chart modal
-    openChartModal(state, confirmed, recovered, death, data) {
+    openChartModal(data) {
 
       // 整理資料：前四筆是資訊、後面的是數據
-      this.chart.state = state;
-      this.chart.confirmed = confirmed;
-      this.chart.recovered = recovered;
-      this.chart.death = death;
+      this.chart.state = data.state;
+      this.chart.confirmed = data.count.confirmed;
+      this.chart.recovered = data.count.recovered;
+      this.chart.death = data.count.death;
 
-      google.charts.load('current', {'packages':['line']});
-      google.charts.setOnLoadCallback(drawChart);
+      // 建 labels
+      let confirmedKeys = Object.keys(data.data.confirmed);
+      confirmedKeys = confirmedKeys.slice(4, confirmedKeys.length);
 
-      let chartData = [];
-      for(let i = 4, len = data[0].length; i < len; i++) {
-        let item = [
-          data[0][i].split('T')[0],
-          data[1][i],
-          data[2][i],
-          data[3][i]
-        ];
-        chartData.push(item);
+      let recoveredKeys = Object.keys(data.data.recovered);
+      recoveredKeys = recoveredKeys.slice(4, recoveredKeys.length);
+
+      let deathKeys = Object.keys(data.data.death);
+      deathKeys = deathKeys.slice(4, deathKeys.length);
+      
+      let labels = [];
+      Array.prototype.forEach.call(confirmedKeys, key => {
+        labels.push(key.split('/20')[0]);
+      });
+
+      // 整理數據
+      let confirmedData = [], recoveredData = [], deathData = [];
+      Array.prototype.forEach.call(confirmedKeys, key => {
+        let confirmedValue = Number(data.data.confirmed[key]) || 0;
+        confirmedData.push(confirmedValue);
+      });
+      Array.prototype.forEach.call(recoveredKeys, key => {
+        let recoveredValue = Number(data.data.recovered[key]) || 0;
+        recoveredData.push(recoveredValue);
+      });
+      Array.prototype.forEach.call(deathKeys, key => {
+        let deathValue = Number(data.data.death[key]) || 0;
+        deathData.push(deathValue);
+      });
+      
+      let confirmedItem = {
+        label: '確診',
+        backgroundColor: '#2196F3',
+        borderColor: '#2196F3',
+        data: confirmedData,
+        fill: false
+      };
+      let recoveredItem = {
+        label: '康復',
+        backgroundColor: '#4CAF50',
+        borderColor: '#4CAF50',
+        data: recoveredData,
+        fill: false
+      };
+      let deathItem = {
+        label: '死亡',
+        backgroundColor: '#f44336',
+        borderColor: '#f44336',
+        data: deathData,
+        fill: false
       }
 
-      function drawChart() {
-
-        var data = new google.visualization.DataTable();
-        data.addColumn('string', '');
-        data.addColumn('number', '確診');
-        data.addColumn('number', '康復');
-        data.addColumn('number', '死亡');
-
-        data.addRows(chartData);
-
-        var options = {
-          axes: {
-            x: {
-              0: {side: 'bottom'}
-            }
+      var config = {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [confirmedItem, recoveredItem, deathItem]
+        },
+        options: {
+          responsive: true,
+          tooltips: {
+            mode: 'index',
+            intersect: false,
           },
-          chartArea: { left: 20, top: 20, width: '100%', height: '90%' },
-          colors: ['#2196F3', '#4CAF50', '#f44336']
-        };
+          hover: {
+            mode: 'nearest',
+            intersect: true
+          },
+          scales: {
+            xAxes: [{
+              display: true,
+              scaleLabel: {
+                display: true,
+                labelString: '日期'
+              }
+            }],
+            yAxes: [{
+              display: true,
+              scaleLabel: {
+                display: true,
+                labelString: '人數'
+              }
+            }]
+          }
+        }
+      };
 
-        var chart = new google.charts.Line(document.getElementById('chart_div'));
-
-        chart.draw(data, google.charts.Line.convertOptions(options));
-      }
+      let ctx = document.getElementById('data-chart').getContext('2d');
+      this.chartCanvas = new Chart(ctx, config);
 
       this.toastLoading = false;
+    },
+    // 刪除chart.js
+    destroyChart() {
+      this.toast = false;
+      this.chartCanvas.destroy();
     },
     // 移動地圖中心
     moveMapCenter(lat, lng, el) {
