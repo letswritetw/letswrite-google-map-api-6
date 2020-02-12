@@ -328,8 +328,6 @@ const GoogleMap = new Vue({
             infowindow.addListener('domready', e => {
               let btn = document.getElementById(`info-btn-${dataFormat.id}`);
               btn.addEventListener('click', e => {
-                this.toast = true;
-                this.toastLoading = true;
                 this.openChartModal({
                   state: dataFormat.state,
                   count: {
@@ -350,6 +348,11 @@ const GoogleMap = new Vue({
             // 監聽 marker click 事件
             marker.addListener('click', e => {
               infowindow.open(this.map, marker);
+
+              // 避免重疊地圖bug
+              if(_this.chartCanvas !== null) {
+                _this.destroyChart();
+              }
             });
 
             // 熱圖的 data
@@ -401,6 +404,14 @@ const GoogleMap = new Vue({
     },
     // 開啟 chart modal
     openChartModal(data) {
+
+      // 避免重疊地圖bug
+      if(this.chartCanvas !== null) {
+        this.destroyChart();
+      }
+
+      this.toast = true;
+      this.toastLoading = true;
 
       // 整理資料：前四筆是資訊、後面的是數據
       this.chart.state = data.state;
