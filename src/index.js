@@ -310,12 +310,6 @@ const GoogleMap = new Vue({
                 <p>確診：${dataFormat.confirmed}</p>
                 <p>康復：${dataFormat.recovered}</p>
                 <p>死亡：${dataFormat.death}</p>
-                <button
-                  type="button"
-                  id="info-btn-${dataFormat.id}"
-                  class="btn btn-secondary btn-sm m-1 mt-2 for-mobile-up">
-                  <small>開啟圖表</small> 
-                </button>
               `,
             });
 
