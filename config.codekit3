@@ -38,6 +38,17 @@
 		"oF": 0,
 		"oS": 3
 		},
+	"/fb.jpg": {
+		"ft": 16384,
+		"iS": 157619,
+		"jF": 0,
+		"oA": 1,
+		"oAP": "/fb.jpg",
+		"oF": 0,
+		"oIPL": 0,
+		"opt": 0,
+		"q": 100
+		},
 	"/index.html": {
 		"cB": 0,
 		"ft": 8192,
@@ -82,6 +93,17 @@
 		"oF": 0,
 		"oS": 3,
 		"uL": 1
+		},
+	"/武漢肺炎全球分佈圖 - Google Maps API - Augustus - Let s Write.png": {
+		"ft": 32768,
+		"iS": 565161,
+		"oA": 1,
+		"oAP": "/武漢肺炎全球分佈圖 - Google Maps API - Augustus - Let s Write.png",
+		"oF": 0,
+		"oIPL": 0,
+		"opt": 0,
+		"oT": 1,
+		"q": 100
 		}
 	},
 "hooks": [
