@@ -172,8 +172,10 @@ const GoogleMap = new Vue({
         "London, ON": "倫敦"
       }, {
         "Diamond Princess cruise ship": "鑽石公主號"
+      }, {
+        "San Diego County, CA": "聖地牙哥郡"
       }
-    ]   
+    ]
   },
   methods: {
     // Google Maps API
