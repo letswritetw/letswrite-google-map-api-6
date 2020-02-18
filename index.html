@@ -136,5 +136,29 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
     <script src="dist/main.min.js?v=1.4.1"></script>
 
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.8.2/firebase-app.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+        https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/7.8.2/firebase-analytics.js"></script>
+
+    <script>
+      // Your web app's Firebase configuration
+      var firebaseConfig = {
+        apiKey: "AIzaSyARsP1iRcKtEAgh9Mqa8hinT-kQAJ7d8JY",
+        authDomain: "wishpool-2.firebaseapp.com",
+        databaseURL: "https://wishpool-2.firebaseio.com",
+        projectId: "wishpool-2",
+        storageBucket: "wishpool-2.appspot.com",
+        messagingSenderId: "142802397027",
+        appId: "1:142802397027:web:c189d59478d23e9c6f9556",
+        measurementId: "G-BR91PFGC0G"
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      firebase.analytics();
+</script>
+
   </body>
 </html>
