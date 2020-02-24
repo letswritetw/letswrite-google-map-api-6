@@ -174,6 +174,26 @@ const GoogleMap = new Vue({
         "Diamond Princess cruise ship": "鑽石公主號"
       }, {
         "San Diego County, CA": "聖地牙哥郡"
+      }, {
+        "Iran": "伊朗"
+      }, {
+        "Omaha, NE (From Diamond Princess)": "奧馬哈(從鑽石公主號)",
+      }, {
+        "From Diamond Princess": "從鑽石公主號"
+      }, {
+        "Travis, CA (From Diamond Princess)": "特拉維斯空軍基地(從鑽石公主號)"
+      }, {
+        "Lackland, TX (From Diamond Princess)": "拉克蘭空軍基地(從鑽石公主號)"
+      }, {
+        "San Antonio, TX": "聖安東尼奧"
+      }, {
+        "Egypt": "埃及"
+      }, {
+        "Lebanon": "黎巴嫩"
+      }, {
+        "Humboldt County, CA": "洪堡縣"
+      }, {
+        "Sacramento County, CA": "沙加緬度郡"
       }
     ]
   },
