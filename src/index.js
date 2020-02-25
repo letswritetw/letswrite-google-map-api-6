@@ -194,6 +194,14 @@ const GoogleMap = new Vue({
         "Humboldt County, CA": "洪堡縣"
       }, {
         "Sacramento County, CA": "沙加緬度郡"
+      }, {
+        "Oman": "阿曼"
+      }, {
+        "Iraq": "伊拉克"
+      }, {
+        "Afghanistan": "阿富汗"
+      }, {
+        "Bahrain": "巴林"
       }
     ]
   },
