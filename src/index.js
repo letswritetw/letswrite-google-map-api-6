@@ -202,6 +202,182 @@ const GoogleMap = new Vue({
         "Afghanistan": "阿富汗"
       }, {
         "Bahrain": "巴林"
+      }, {
+        "Switzerland": "瑞士"
+      }, {
+        "Norway": "挪威"
+      }, {
+        "Netherlands": "荷蘭"
+      }, {
+        "Kuwait": "科威特"
+      }, {
+        "King County, WA": "金縣"
+      }, {
+        "Austria": "奧地利"
+      }, {
+        "Iceland": "冰島"
+      }, {
+        "Greece": "希臘"
+      }, {
+        "San Marino": "聖馬利諾"
+      }, {
+        "Snohomish County, WA": "史諾霍米須郡"
+      }, {
+        "Westchester County, NY": "威斯特徹斯特郡"
+      }, {
+        "Israel": "以色列"
+      }, {
+        "Ecuador": "厄瓜多"
+      }, {
+        "Algeria": "阿爾及利亞"
+      }, {
+        "Czech Republic": "捷克"
+      }, {
+        "Croatia": "克羅埃西亞"
+      }, {
+        "Denmark": "丹麥"
+      }, {
+        "Qatar": "卡達"
+      }, {
+        "Portugal": "葡萄牙"
+      }, {
+        "Romania": "羅馬尼亞"
+      }, {
+        "Belarus": "白俄羅斯"
+      }, {
+        "Ireland": "愛爾蘭島"
+      }, {
+        "Azerbaijan": "亞塞拜然"
+      }, {
+        "Cook County, IL": "庫克縣"
+      }, {
+        "Pakistan": "巴基斯坦"
+      }, {
+        "Mexico": "墨西哥"
+      }, {
+        "Saudi Arabia": "沙烏地阿拉伯"
+      }, {
+        "Brazil": "巴西"
+      }, {
+        "Georgia": "喬治亞"
+      }, {
+        "Senegal": "塞內加爾"
+      }, {
+        "New York City, NY": "紐約"
+      }, {
+        "Chile": "智利"
+      }, {
+        "Palestine": "巴勒斯坦"
+      }, {
+        "Estonia": "愛沙尼亞"
+      }, {
+        "New Zealand": "紐西蘭"
+      }, {
+        "Western Australia": "西澳大利亞州"
+      }, {
+        "Saint Barthelemy": "聖巴瑟米"
+      }, {
+        "Orange County, CA": "橘郡"
+      }, {
+        "Montreal, QC": "蒙特利爾"
+      }, {
+        "Providence, RI": "普洛敦維士"
+      }, {
+        "Indonesia": "印尼"
+      }, {
+        "Morocco": "摩洛哥"
+      }, {
+        "Grafton County, NH": "格拉夫頓縣"
+      }, {
+        "Hillsborough, FL": "希爾斯波羅縣"
+      }, {
+        "Placer County, CA": "普萊瑟郡"
+      }, {
+        "San Mateo, CA": "聖馬刁"
+      }, {
+        "Fulton County, GA": "富爾頓縣"
+      }, {
+        "Washington County, OR": "華盛頓縣"
+      }, {
+        "Hungary": "匈牙利"
+      }, {
+        "Bosnia and Herzegovina": "波士尼亞與赫塞哥維納"
+      }, {
+        "Slovenia": "斯洛維尼亞"
+      }, {
+        "Bergen County, NJ": "博根郡"
+      }, {
+        "Harris County, TX": "哈里斯縣"
+      }, {
+        "San Francisco County, CA": "舊金山"
+      }, {
+        "North Macedonia": "北馬其頓"
+      }, {
+        "Lithuania": "立陶宛"
+      }, {
+        "Nigeria": "奈及利亞"
+      }, {
+        "Luxembourg": "盧森堡"
+      }, {
+        "Monaco": "摩納哥"
+      }, {
+        "Armenia": "亞美尼亞"
+      }, {
+        "Dominican Republic": "多明尼加共和國"
+      }, {
+        "Andorra": "安道爾"
+      }, {
+        "Tasmania": "塔斯馬尼亞州"
+      }, {
+        "Latvia": "拉脫維亞"
+      }, {
+        "Sarasota, FL": "薩拉索塔"
+      }, {
+        "Sonoma County, CA": "索諾馬縣"
+      }, {
+        "Umatilla, OR": "尤馬蒂拉"
+      }, {
+        "Argentina": "阿根廷"
+      }, {
+        "Jordan": "約旦"
+      }, {
+        "Norfolk County, MA": "諾福克縣"
+      }, {
+        "Berkeley, CA": "柏克萊"
+      }, {
+        "Maricopa County, AZ": "馬里科帕縣"
+      }, {
+        "Wake County, NC": "韋克縣"
+      }, {
+        "Ukraine": "烏克蘭"
+      }, {
+        "Northern Territory": "北領地"
+      }, {
+        "Faroe Islands": "法羅群島"
+      }, {
+        "Gibraltar": "直布羅陀"
+      }, {
+        "Liechtenstein": "列支敦斯登"
+      }, {
+        "Poland": "波蘭"
+      }, {
+        "Tunisia": "突尼西亞"
+      }, {
+        "Contra Costa County, CA": "康特拉科斯塔縣"
+      }, {
+        "South Africa": "南非"
+      }, {
+        "Clark County, NV": "克拉克縣"
+      }, {
+        "Fort Bend County, TX": "本德堡郡"
+      }, {
+        "Grant County, WA": "格蘭特縣"
+      }, {
+        "Queens County, NY": "皇后區"
+      }, {
+        "Santa Rosa County, FL": "聖羅薩郡"
+      }, {
+        "Williamson County, TN": "威廉森郡"
       }
     ]
   },
