@@ -17,371 +17,20 @@ const GoogleMap = new Vue({
     chartCanvas: null, // 最後生成的圖表
     toast: false, // 圖表是否打開
     toastLoading: true,// 圖表是否在讀取中
-    translate: [
-      {
-        "Anhui": "安徽省"
-      }, {
-        "Beijing": "北京市"
-      }, {
-        "Chongqing": "重慶市"
-      }, {
-        "Fujian": "福建省"
-      }, {
-        "Gansu": "甘肅省"
-      }, {
-        "Guangdong": "廣東省"
-      }, {
-        "Guangxi": "廣西壯族自治區"
-      }, {
-        "Guizhou": "貴州省"
-      }, {
-        "Hainan": "海南省"
-      }, {
-        "Hebei": "河北省"
-      }, {
-        "Heilongjiang": "黑龍江省"
-      }, {
-        "Henan": "河南省"
-      }, {
-        "Hubei": "湖北省"
-      }, {
-        "Hunan": "湖南省"
-      }, {
-        "Inner Mongolia": "內蒙古自治區"
-      }, {
-        "Jiangsu": "江蘇省"
-      }, {
-        "Jiangxi": "江西省"
-      }, {
-        "Jilin": "吉林省"
-      }, {
-        "Liaoning": "遼寧省"
-      }, {
-        "Ningxia": "寧夏回族自治區"
-      }, {
-        "Qinghai": "青海省"
-      }, {
-        "Shaanxi": "陝西省"
-      }, {
-        "Shandong": "山東省"
-      }, {
-        "Shanghai": "上海市"
-      }, {
-        "Shanxi": "山西省"
-      }, {
-        "Sichuan": "四川省"
-      }, {
-        "Tianjin": "天津市"
-      }, {
-        "Tibet": "西藏自治區"
-      }, {
-        "Xinjiang": "新疆維吾爾自治區"
-      }, {
-        "Yunnan": "雲南省"
-      }, {
-        "Zhejiang": "浙江省"
-      }, {
-        "Thailand": "泰國"
-      }, {
-        "Japan": "日本"
-      }, {
-        "South Korea": "南韓"
-      }, {
-        "Taiwan": "台灣"
-      }, {
-        "Washington": "華盛頓"
-      }, {
-        "Illinois": "伊利諾伊州"
-      }, {
-        "California": "加利福尼亞"
-      }, {
-        "Arizona": "亞利桑那州"
-      }, {
-        "Macau": "澳門"
-      }, {
-        "Hong Kong": "香港"
-      }, {
-        "Singapore": "新加坡"
-      }, {
-        "Vietnam": "越南"
-      }, {
-        "France": "法國"
-      }, {
-        "Nepal": "尼泊爾"
-      }, {
-        "Malaysia": "馬來西亞"
-      }, {
-        "Ontario": "安大略"
-      }, {
-        "British Columbia": "英屬哥倫比亞"
-      }, {
-        "New South Wales": "新南威爾斯州"
-      }, {
-        "Victoria": "維多利亞"
-      }, {
-        "Queensland": "昆士蘭州"
-      }, {
-        "Cambodia": "柬埔寨"
-      }, {
-        "Sri Lanka": "斯里蘭卡"
-      }, {
-        "Germany": "德國"
-      }, {
-        "Finland": "芬蘭"
-      }, {
-        "United Arab Emirates": "阿拉伯聯合大公國"
-      }, {
-        "Philippines": "菲律賓"
-      }, {
-        "India": "印度"
-      }, {
-        "Italy": "義大利"
-      }, {
-        "UK": "英國"
-      }, {
-        "Russia": "俄羅斯"
-      }, {
-        "Sweden": "瑞典"
-      }, {
-        "Spain": "西班牙"
-      }, {
-        "South Australia": "南澳洲"
-      }, {
-        "Boston, MA": "波士頓"
-      }, {
-        "Belgium": "比利時"
-      }, {
-        "Madison, WI": "麥迪遜"
-      }, {
-        "Chicago, IL": "芝加哥"
-      }, {
-        "Toronto, ON": "多倫多"
-      }, {
-        "Santa Clara, CA": "聖塔克拉拉"
-      }, {
-        "San Benito, CA": "聖貝尼托縣"
-      }, {
-        "Seattle, WA": "西雅圖"
-      }, {
-        "Tempe, AZ": "坦佩"
-      }, {
-        "Orange, CA": "橙市"
-      }, {
-        "Los Angeles, CA": "洛杉磯"
-      }, {
-        "London, ON": "倫敦"
-      }, {
-        "Diamond Princess cruise ship": "鑽石公主號"
-      }, {
-        "San Diego County, CA": "聖地牙哥郡"
-      }, {
-        "Iran": "伊朗"
-      }, {
-        "Omaha, NE (From Diamond Princess)": "奧馬哈(從鑽石公主號)",
-      }, {
-        "From Diamond Princess": "從鑽石公主號"
-      }, {
-        "Travis, CA (From Diamond Princess)": "特拉維斯空軍基地(從鑽石公主號)"
-      }, {
-        "Lackland, TX (From Diamond Princess)": "拉克蘭空軍基地(從鑽石公主號)"
-      }, {
-        "San Antonio, TX": "聖安東尼奧"
-      }, {
-        "Egypt": "埃及"
-      }, {
-        "Lebanon": "黎巴嫩"
-      }, {
-        "Humboldt County, CA": "洪堡縣"
-      }, {
-        "Sacramento County, CA": "沙加緬度郡"
-      }, {
-        "Oman": "阿曼"
-      }, {
-        "Iraq": "伊拉克"
-      }, {
-        "Afghanistan": "阿富汗"
-      }, {
-        "Bahrain": "巴林"
-      }, {
-        "Switzerland": "瑞士"
-      }, {
-        "Norway": "挪威"
-      }, {
-        "Netherlands": "荷蘭"
-      }, {
-        "Kuwait": "科威特"
-      }, {
-        "King County, WA": "金縣"
-      }, {
-        "Austria": "奧地利"
-      }, {
-        "Iceland": "冰島"
-      }, {
-        "Greece": "希臘"
-      }, {
-        "San Marino": "聖馬利諾"
-      }, {
-        "Snohomish County, WA": "史諾霍米須郡"
-      }, {
-        "Westchester County, NY": "威斯特徹斯特郡"
-      }, {
-        "Israel": "以色列"
-      }, {
-        "Ecuador": "厄瓜多"
-      }, {
-        "Algeria": "阿爾及利亞"
-      }, {
-        "Czech Republic": "捷克"
-      }, {
-        "Croatia": "克羅埃西亞"
-      }, {
-        "Denmark": "丹麥"
-      }, {
-        "Qatar": "卡達"
-      }, {
-        "Portugal": "葡萄牙"
-      }, {
-        "Romania": "羅馬尼亞"
-      }, {
-        "Belarus": "白俄羅斯"
-      }, {
-        "Ireland": "愛爾蘭島"
-      }, {
-        "Azerbaijan": "亞塞拜然"
-      }, {
-        "Cook County, IL": "庫克縣"
-      }, {
-        "Pakistan": "巴基斯坦"
-      }, {
-        "Mexico": "墨西哥"
-      }, {
-        "Saudi Arabia": "沙烏地阿拉伯"
-      }, {
-        "Brazil": "巴西"
-      }, {
-        "Georgia": "喬治亞"
-      }, {
-        "Senegal": "塞內加爾"
-      }, {
-        "New York City, NY": "紐約"
-      }, {
-        "Chile": "智利"
-      }, {
-        "Palestine": "巴勒斯坦"
-      }, {
-        "Estonia": "愛沙尼亞"
-      }, {
-        "New Zealand": "紐西蘭"
-      }, {
-        "Western Australia": "西澳大利亞州"
-      }, {
-        "Saint Barthelemy": "聖巴瑟米"
-      }, {
-        "Orange County, CA": "橘郡"
-      }, {
-        "Montreal, QC": "蒙特利爾"
-      }, {
-        "Providence, RI": "普洛敦維士"
-      }, {
-        "Indonesia": "印尼"
-      }, {
-        "Morocco": "摩洛哥"
-      }, {
-        "Grafton County, NH": "格拉夫頓縣"
-      }, {
-        "Hillsborough, FL": "希爾斯波羅縣"
-      }, {
-        "Placer County, CA": "普萊瑟郡"
-      }, {
-        "San Mateo, CA": "聖馬刁"
-      }, {
-        "Fulton County, GA": "富爾頓縣"
-      }, {
-        "Washington County, OR": "華盛頓縣"
-      }, {
-        "Hungary": "匈牙利"
-      }, {
-        "Bosnia and Herzegovina": "波士尼亞與赫塞哥維納"
-      }, {
-        "Slovenia": "斯洛維尼亞"
-      }, {
-        "Bergen County, NJ": "博根郡"
-      }, {
-        "Harris County, TX": "哈里斯縣"
-      }, {
-        "San Francisco County, CA": "舊金山"
-      }, {
-        "North Macedonia": "北馬其頓"
-      }, {
-        "Lithuania": "立陶宛"
-      }, {
-        "Nigeria": "奈及利亞"
-      }, {
-        "Luxembourg": "盧森堡"
-      }, {
-        "Monaco": "摩納哥"
-      }, {
-        "Armenia": "亞美尼亞"
-      }, {
-        "Dominican Republic": "多明尼加共和國"
-      }, {
-        "Andorra": "安道爾"
-      }, {
-        "Tasmania": "塔斯馬尼亞州"
-      }, {
-        "Latvia": "拉脫維亞"
-      }, {
-        "Sarasota, FL": "薩拉索塔"
-      }, {
-        "Sonoma County, CA": "索諾馬縣"
-      }, {
-        "Umatilla, OR": "尤馬蒂拉"
-      }, {
-        "Argentina": "阿根廷"
-      }, {
-        "Jordan": "約旦"
-      }, {
-        "Norfolk County, MA": "諾福克縣"
-      }, {
-        "Berkeley, CA": "柏克萊"
-      }, {
-        "Maricopa County, AZ": "馬里科帕縣"
-      }, {
-        "Wake County, NC": "韋克縣"
-      }, {
-        "Ukraine": "烏克蘭"
-      }, {
-        "Northern Territory": "北領地"
-      }, {
-        "Faroe Islands": "法羅群島"
-      }, {
-        "Gibraltar": "直布羅陀"
-      }, {
-        "Liechtenstein": "列支敦斯登"
-      }, {
-        "Poland": "波蘭"
-      }, {
-        "Tunisia": "突尼西亞"
-      }, {
-        "Contra Costa County, CA": "康特拉科斯塔縣"
-      }, {
-        "South Africa": "南非"
-      }, {
-        "Clark County, NV": "克拉克縣"
-      }, {
-        "Fort Bend County, TX": "本德堡郡"
-      }, {
-        "Grant County, WA": "格蘭特縣"
-      }, {
-        "Queens County, NY": "皇后區"
-      }, {
-        "Santa Rosa County, FL": "聖羅薩郡"
-      }, {
-        "Williamson County, TN": "威廉森郡"
-      }
-    ]
+    translates: []
   },
   methods: {
+    // 翻譯表
+    getTranslate() {
+      return new Promise((resolve, reject) => {
+        fetch('https://spreadsheets.google.com/feeds/list/1gTzmvV0QG3t6_KOwvI9uNeUB9sNo3TjTQYRATpJ9jeE/1/public/values?alt=json')
+          .then(res => res.json())
+          .then(res => {
+            this.translates = res.feed.entry;
+            resolve();
+          })
+      })
+    },
     // Google Maps API
     initMap() {
       fetch(this.api)
@@ -469,10 +118,10 @@ const GoogleMap = new Vue({
           // 城市、國家名翻中文
           function translateCh(name) {
             let result = '';
-            Array.prototype.forEach.call(_this.translate, trans => {
-              let compareName = Object.keys(trans)[0];
-              if(compareName === name) {
-                return result = trans[compareName];
+            Array.prototype.forEach.call(_this.translates, trans => {
+              let compareName = trans.gsx$city.$t;
+              if(compareName == name) {
+                return result = trans.gsx$translate.$t;
               }
             });
             if(result != '') {
@@ -492,13 +141,19 @@ const GoogleMap = new Vue({
             let state = confirmed[i]['Province/State'].replace('--', ', ') || confirmed[i]['Country/Region'].replace('--', ', ');
             let dataFormat = {};
             dataFormat.id = i;
-            dataFormat.state = translateCh(state);
+            dataFormat.stateEN = state;
+            dataFormat.stateCH = translateCh(state);
             dataFormat.lat = confirmed[i]['Lat'];
             dataFormat.lng = confirmed[i]['Long'];
             dataFormat.confirmed = Number(confirmed[i][Object.keys(confirmed[0])[len]]) || 0;
             dataFormat.recovered = Number(recovered[i][Object.keys(recovered[0])[len]]) || 0;
             dataFormat.death = Number(death[i][Object.keys(death[0])[len]]) || 0;
             tempArr.push(dataFormat);
+
+            // 寫所有的 state 進 google sheet
+            // $.post('https://docs.google.com/forms/u/0/d/e/1FAIpQLSd7nyjeIieHqUEXRx77-tz8inx1S-IYmdPolTJRuMy6bBCb_Q/formResponse', {
+            //   'entry.247938000': state
+            // });
 
             // 經緯度
             let latlng = new google.maps.LatLng(dataFormat.lat, dataFormat.lng);
@@ -512,7 +167,7 @@ const GoogleMap = new Vue({
             // info window
             let infowindow = new google.maps.InfoWindow({
               content: `
-                <h6>${dataFormat.state}</h6>
+                <h6>${dataFormat.stateCH}</h6>
                 <p>確診：${dataFormat.confirmed}</p>
                 <p>康復：${dataFormat.recovered}</p>
                 <p>死亡：${dataFormat.death}</p>
@@ -535,7 +190,7 @@ const GoogleMap = new Vue({
               let btn = document.getElementById(`info-btn-${dataFormat.id}`);
               btn.addEventListener('click', e => {
                 this.openChartModal({
-                  state: dataFormat.state,
+                  state: `${dataFormat.stateCH} ${dataFormat.stateEn}`,
                   count: {
                     confirmed: dataFormat.confirmed,
                     recovered: dataFormat.recovered,
@@ -733,6 +388,8 @@ const GoogleMap = new Vue({
     const script = document.createElement("script");
     script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyBG9pWjn7gWHoqsNqTrU2EpWfZkyTlh6_I&libraries=visualization';
     document.head.appendChild(script);
-    script.onload = this.initMap;
+    script.onload = () => {
+      this.getTranslate().then(() => this.initMap());
+    };
   }
 });

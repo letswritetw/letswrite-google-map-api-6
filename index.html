@@ -23,7 +23,7 @@
     <link rel="shortcut icon" href="https://i0.wp.com/letswrite.tw/wp-content/uploads/2019/07/cropped-letswrite512-1.jpg"/>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="dist/style.min.css?v=1.4.0">
+    <link rel="stylesheet" href="dist/style.min.css?v=1.5.0">
 
     <link rel="shortcut icon" href="https://i0.wp.com/letswrite.tw/wp-content/uploads/2019/07/cropped-letswrite512-1.jpg"/>
 
@@ -101,7 +101,8 @@
               v-for="(data, key) in responseData"
               class="list-group-item d-flex justify-content-between align-items-center text-white bg-dark">
               <a href="#" @click.prevent="moveMapCenter(data.lat, data.lng, data)">
-                {{ data.state }}
+                <span>{{ data.stateCH }}</span>
+                <small>{{ data.stateEN }}</small>
               </a>
               <span class="badge badge-secondary badge-pill">
                 {{ showCount(data.confirmed, data.recovered, data.death) }}
@@ -131,10 +132,12 @@
       </section>
 
     </div>
+
+    <!-- <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script> -->
     
     <script src="https://vuejs.org/js/vue.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-    <script src="dist/main.min.js?v=1.4.3"></script>
+    <script src="dist/main.min.js?v=1.5.0"></script>
 
     <!-- The core Firebase JS SDK is always required and must be listed first -->
     <script src="https://www.gstatic.com/firebasejs/7.8.2/firebase-app.js"></script>

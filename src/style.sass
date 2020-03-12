@@ -73,10 +73,10 @@ body
   right: 62px
   bottom: 23px
   z-index: 2
-  max-width: 230px
+  max-width: 280px
   width: 100%
   .list-group
-    max-height: 30vh
+    max-height: 50vh
     overflow: auto
     &::-webkit-scrollbar
       width: 8px
@@ -88,11 +88,17 @@ body
       border-radius: 4px
   .card-body
     a
-      text-decoration: underline
-      color: rgba(#FFF, .87)
+      color: rgba(#FFF, .8)
       &:hover
         text-decoration: none
         color: #FFF
+    small
+      display: block
+  .list-group-item
+    padding-top: 4px
+    padding-bottom: 4px
+    &:nth-of-type(even)
+      background-color: rgba(#FFF, .05) !important
 
 
 // .chart-modal
