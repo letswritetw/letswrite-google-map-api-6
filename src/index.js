@@ -41,8 +41,8 @@ const GoogleMap = new Vue({
 
           // 預設顯示的中心點
           const center = {
-            lat: 30.97564,
-            lng: 112.2707
+            lat: 43,
+            lng: 12
           };
           
           this.map = new google.maps.Map(document.getElementById('map'), {
