@@ -11,7 +11,6 @@ const GoogleMap = new Vue({
     chart: {
       state: '',
       confirmed: 0,
-      recovered: 0,
       death: 0
     },
     chartCanvas: null, // 最後生成的圖表
@@ -134,7 +133,6 @@ const GoogleMap = new Vue({
           // 處理每個資料
           let tempArr = []; // 最後要排序用的
           const confirmed = res.confirmed;
-          const recovered = res.recovered;
           const death = res.death;
           for(let i = 0, len = confirmed.length; i < len; i++) {
             let len = Object.keys(confirmed[0]).length - 1;
@@ -146,7 +144,6 @@ const GoogleMap = new Vue({
             dataFormat.lat = confirmed[i]['Lat'];
             dataFormat.lng = confirmed[i]['Long'];
             dataFormat.confirmed = Number(confirmed[i][Object.keys(confirmed[0])[len]]) || 0;
-            dataFormat.recovered = Number(recovered[i][Object.keys(recovered[0])[len]]) || 0;
             dataFormat.death = Number(death[i][Object.keys(death[0])[len]]) || 0;
             tempArr.push(dataFormat);
 
@@ -169,7 +166,6 @@ const GoogleMap = new Vue({
               content: `
                 <h6>${dataFormat.stateCH}</h6>
                 <p>確診：${dataFormat.confirmed}</p>
-                <p>康復：${dataFormat.recovered}</p>
                 <p>死亡：${dataFormat.death}</p>
                 <button
                   type="button"
@@ -190,15 +186,13 @@ const GoogleMap = new Vue({
               let btn = document.getElementById(`info-btn-${dataFormat.id}`);
               btn.addEventListener('click', e => {
                 this.openChartModal({
-                  state: `${dataFormat.stateCH} ${dataFormat.stateEn}`,
+                  state: `${dataFormat.stateCH} ${dataFormat.stateEN}`,
                   count: {
                     confirmed: dataFormat.confirmed,
-                    recovered: dataFormat.recovered,
                     death: dataFormat.death,
                   },
                   data: {
                     confirmed: res.confirmed[i],
-                    recovered: res.recovered[i],
                     death: res.death[i]
                   }
                 })
@@ -252,12 +246,9 @@ const GoogleMap = new Vue({
       });
     },
     // 數據列表要呈現哪一組資料
-    showCount(confirmed, recovered, death) {
+    showCount(confirmed, death) {
       if(this.tabType === 'confirmed') {
         return confirmed;
-      }
-      if(this.tabType === 'recovered') {
-        return recovered;
       }
       if(this.tabType === 'death') {
         return death;
@@ -277,15 +268,11 @@ const GoogleMap = new Vue({
       // 整理資料：前四筆是資訊、後面的是數據
       this.chart.state = data.state;
       this.chart.confirmed = data.count.confirmed;
-      this.chart.recovered = data.count.recovered;
       this.chart.death = data.count.death;
 
       // 建 labels
       let confirmedKeys = Object.keys(data.data.confirmed);
       confirmedKeys = confirmedKeys.slice(4, confirmedKeys.length);
-
-      let recoveredKeys = Object.keys(data.data.recovered);
-      recoveredKeys = recoveredKeys.slice(4, recoveredKeys.length);
 
       let deathKeys = Object.keys(data.data.death);
       deathKeys = deathKeys.slice(4, deathKeys.length);
@@ -296,14 +283,10 @@ const GoogleMap = new Vue({
       });
 
       // 整理數據
-      let confirmedData = [], recoveredData = [], deathData = [];
+      let confirmedData = [], deathData = [];
       Array.prototype.forEach.call(confirmedKeys, key => {
         let confirmedValue = Number(data.data.confirmed[key]) || 0;
         confirmedData.push(confirmedValue);
-      });
-      Array.prototype.forEach.call(recoveredKeys, key => {
-        let recoveredValue = Number(data.data.recovered[key]) || 0;
-        recoveredData.push(recoveredValue);
       });
       Array.prototype.forEach.call(deathKeys, key => {
         let deathValue = Number(data.data.death[key]) || 0;
@@ -315,13 +298,6 @@ const GoogleMap = new Vue({
         backgroundColor: '#2196F3',
         borderColor: '#2196F3',
         data: confirmedData,
-        fill: false
-      };
-      let recoveredItem = {
-        label: '康復',
-        backgroundColor: '#4CAF50',
-        borderColor: '#4CAF50',
-        data: recoveredData,
         fill: false
       };
       let deathItem = {
@@ -336,7 +312,7 @@ const GoogleMap = new Vue({
         type: 'line',
         data: {
           labels: labels,
-          datasets: [confirmedItem, recoveredItem, deathItem]
+          datasets: [confirmedItem, deathItem]
         },
         options: {
           responsive: true,
