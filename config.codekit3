@@ -7,7 +7,7 @@
 		"uuidString": "E3E6C099-7411-4BAB-B8D9-EB581D876D6F"
 		}
 	],
-"creatorBuild": "31934",
+"creatorBuild": "32001",
 "files": {
 	"/.gitignore": {
 		"cB": 0,
@@ -62,28 +62,6 @@
 		"oA": 2,
 		"oAP": "/build/node_modules",
 		"oF": 0
-		},
-	"/node_modules/@babel/polyfill/lib/index.js": {
-		"bF": 0,
-		"ft": 64,
-		"ma": 1,
-		"mi": 1,
-		"oA": 1,
-		"oAP": "/node_modules/@babel/polyfill/lib/index.min.js",
-		"oF": 0,
-		"sC": 0,
-		"tS": 1
-		},
-	"/node_modules/axios/index.js": {
-		"bF": 0,
-		"ft": 64,
-		"ma": 1,
-		"mi": 1,
-		"oA": 1,
-		"oAP": "/node_modules/axios/index.min.js",
-		"oF": 0,
-		"sC": 0,
-		"tS": 1
 		},
 	"/package-lock.json": {
 		"ft": 524288,
@@ -755,6 +733,10 @@
 			"active": 0,
 			"optionString": ""
 			},
+		"grouped-accessor-pairs": {
+			"active": 0,
+			"optionString": "'anyOrder'"
+			},
 		"guard-for-in": {
 			"active": 0,
 			"optionString": ""
@@ -931,6 +913,10 @@
 			"active": 1,
 			"optionString": "{'checkLoops': true}"
 			},
+		"no-constructor-return": {
+			"active": 0,
+			"optionString": ""
+			},
 		"no-continue": {
 			"active": 0,
 			"optionString": ""
@@ -956,6 +942,10 @@
 			"optionString": ""
 			},
 		"no-dupe-class-members": {
+			"active": 1,
+			"optionString": ""
+			},
+		"no-dupe-else-if": {
 			"active": 1,
 			"optionString": ""
 			},
@@ -1259,6 +1249,10 @@
 			"active": 0,
 			"optionString": ""
 			},
+		"no-setter-return": {
+			"active": 1,
+			"optionString": ""
+			},
 		"no-shadow": {
 			"active": 0,
 			"optionString": "{'builtinGlobals': false, 'hoist': 'functions', 'allow': []}"
@@ -1462,6 +1456,10 @@
 		"prefer-destructuring": {
 			"active": 0,
 			"optionString": "{'array': true, 'object': true}, {'enforceForRenamedProperties': false}"
+			},
+		"prefer-exponentiation-operator": {
+			"active": 0,
+			"optionString": ""
 			},
 		"prefer-named-capture-group": {
 			"active": 0,

@@ -216,11 +216,6 @@ const GoogleMap = new Vue({
               weight: dataFormat.confirmed
             };
 
-            // 湖北數目太大，縮小成跟大家差不多的數量才能畫熱圖
-            if(confirmed[i]['Province/State'] === 'Hubei') {
-              coData.weight = dataFormat.confirmed * 0.15
-            }
-
             this.heatmapData.push(coData);
 
           }
